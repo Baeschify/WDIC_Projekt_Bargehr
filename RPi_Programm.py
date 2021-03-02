@@ -15,25 +15,25 @@ def callbackbkw():
 	global images
 	global imagenumber
 	imagenumber=imagenumber-1 
-	picture = 'images/' + images[imagenumber]
+	picture = 'images_png/' + images[imagenumber]
     #print(picture)
 	img = PhotoImage(file = picture)
 	Label(pictureFrame, image=img).grid(row=0, column=0, padx=10, pady=3)
-	MainWindow.mainloop() #Problem!
+	#MainWindow.mainloop() #Problem!
 
 def callbackfwd():
 	global images
 	global imagenumber
 	imagenumber=imagenumber+1
-	picture = 'images/' + images[imagenumber]
+	picture = 'images_png/' + images[imagenumber]
     #print(picture)
 	img = PhotoImage(file = picture)
 	Label(pictureFrame, image=img).grid(row=0, column=0, padx=10, pady=3)
-	MainWindow.mainloop() #Problem!
+	#MainWindow.mainloop() #Problem!
 
 #vorhandene Ordner/Files anzeigen:
 def list_folder():
-    for file in os.listdir('images'):
+    for file in os.listdir('images_png'):
         print(file)
         images.append(file)
 
