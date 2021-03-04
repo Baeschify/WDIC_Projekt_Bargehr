@@ -5,31 +5,34 @@ import os, sys   # für Verzeichnisse auslesen
 #from PIL import *
 
 
-
 #Liste
 images = []
 imagenumber = 0
 
-    
+#Funktionen:
 def callbackbkw():
 	global images
 	global imagenumber
 	imagenumber=imagenumber-1 
 	picture = 'images_png/' + images[imagenumber]
-    #print(picture)
+	print(picture)
 	img = PhotoImage(file = picture)
 	Label(pictureFrame, image=img).grid(row=0, column=0, padx=10, pady=3)
-	#MainWindow.mainloop() #Problem!
+	#MainWindow.after(0, uart)
+	MainWindow.mainloop()
+	#MainWindow.update()
 
 def callbackfwd():
 	global images
 	global imagenumber
 	imagenumber=imagenumber+1
 	picture = 'images_png/' + images[imagenumber]
-    #print(picture)
+	print(picture)
 	img = PhotoImage(file = picture)
 	Label(pictureFrame, image=img).grid(row=0, column=0, padx=10, pady=3)
-	#MainWindow.mainloop() #Problem!
+	#MainWindow.after(0, uart)
+	MainWindow.mainloop()
+	#MainWindow.update()
 
 #vorhandene Ordner/Files anzeigen:
 def list_folder():
@@ -37,10 +40,13 @@ def list_folder():
         print(file)
         images.append(file)
 
+def uart():
+	print("Hello")
+	print("World")
 list_folder()
 print(images)
 
-#GUI:
+#GUI
 MainWindow = Tk() # Fenster erstellen
 MainWindow.title("Image-Viewer") # Fenster Titel
 MainWindow.config(background = '#FFFFFF') # Hintergrundfarbe des Fensters (weiß)
@@ -71,10 +77,13 @@ buttonbkw.grid(row=0, column=0, padx=0, pady=0)
 #Eine Lösung im Internet ist in einer While-Schleife, wo sich ja auch die UART-Empfangsroutine befinden wird,
 #'tk.update_idletasks()' und 'tk.update()' zu verwende, wobei dies nicht ganz funktioniert.
 
+#MainWindow.after(0, uart)
+#MainWindow.mainloop()
+
 while True:
     print('Hello')
-    MainWindow.update_idletasks()
     MainWindow.update()
+    #MainWindow.mainloop()
     print('World')
 
 #Tkinter kann leider keine jpg Bilder anzeigen, sondern nur png und andere, was derzeit noch zu Problemen mit dem Anzeigen der
