@@ -41,7 +41,7 @@ void usart_sendstring(char *s)
 	while(s[i]!=0)			//wenn array fertig ist, dann wert ist Null
 	{
 		usart_putchar(s[i]);
-		usart_putchar('\r');
+		//usart_putchar('\r');
 
 		i++;
 	}
