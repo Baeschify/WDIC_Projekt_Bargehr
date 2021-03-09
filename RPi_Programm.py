@@ -10,6 +10,7 @@ from threading import Thread
 images = []
 imagenumber = 0
 
+
 #Funktionen:
 def callbackbkw():
 	global images
