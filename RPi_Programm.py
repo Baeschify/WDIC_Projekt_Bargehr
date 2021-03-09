@@ -1,8 +1,9 @@
 from tkinter import *    # for GUI
 #import serial    # für UART
-#from time import sleep # for delay
+from time import sleep # for delay
 import os, sys   # für Verzeichnisse auslesen
 #from PIL import *
+from threading import Thread
 
 
 #Liste
@@ -13,7 +14,9 @@ imagenumber = 0
 def callbackbkw():
 	global images
 	global imagenumber
-	imagenumber=imagenumber-1 
+	imagenumber=imagenumber-1
+	if imagenumber < 0:
+		imagenumber = len(images) - 1
 	picture = 'images_png/' + images[imagenumber]
 	print(picture)
 	img = PhotoImage(file = picture)
@@ -26,6 +29,8 @@ def callbackfwd():
 	global images
 	global imagenumber
 	imagenumber=imagenumber+1
+	if imagenumber >= len(images):
+		imagenumber = 0
 	picture = 'images_png/' + images[imagenumber]
 	print(picture)
 	img = PhotoImage(file = picture)
@@ -40,9 +45,13 @@ def list_folder():
         print(file)
         images.append(file)
 
-def uart():
+def uart(main_window):
 	print("Hello")
 	print("World")
+	while True:
+		main_window.after(0, callbackfwd)
+		sleep(1)
+
 list_folder()
 print(images)
 
@@ -80,11 +89,10 @@ buttonbkw.grid(row=0, column=0, padx=0, pady=0)
 #MainWindow.after(0, uart)
 #MainWindow.mainloop()
 
-while True:
-    print('Hello')
-    MainWindow.update()
-    #MainWindow.mainloop()
-    print('World')
+thread = Thread(target=uart, args=(MainWindow,), daemon=True)
+thread.start()
+
+MainWindow.mainloop()
 
 #Tkinter kann leider keine jpg Bilder anzeigen, sondern nur png und andere, was derzeit noch zu Problemen mit dem Anzeigen der
 #Bilder mit sich bringt
