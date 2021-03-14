@@ -12,20 +12,26 @@
 
 int main(void)
 {
-    DDRD = 0b00000010;
+    DDRD = 0b00000001;
 	DDRA = 0xF0;
-	PORTD = 0x0F;
+	PORTA = 0x0F;
+	DDRC = 0xFF;
+	PORTC = 0xF0;
+	
+	usart_init();
 	
     while (1) 
     {
-		if((PINA & 0x01)==0x01) //S0 gedrückt
+		if((~PINA & 0x01)==0x01) //S0 gedrückt
 		{
+			PORTC=0xFF;
 			_delay_ms(500);		//Tastenentprellung 0.5s
 			char s[] = "fwd";
 			usart_sendstring(s);	
 		}
-		else if((PINA & 0x02)==0x02) //S1 gedrückt
+		if((~PINA & 0x02)==0x02) //S1 gedrückt
 		{
+			PORTC=0x00;
 			_delay_ms(500);		//Tastenentprellung 0.5s
 			char s[] = "bkw";
 			usart_sendstring(s);

@@ -3,29 +3,29 @@ MC_Programm.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000146  00000000  00000000  00000054  2**1
+  0 .text         0000015c  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000000  00800060  00800060  0000019a  2**0
+  1 .data         00000000  00800060  00800060  000001b0  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .comment      00000030  00000000  00000000  0000019a  2**0
+  2 .comment      00000030  00000000  00000000  000001b0  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001cc  2**2
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001e0  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000058  00000000  00000000  00000208  2**0
+  4 .debug_aranges 00000058  00000000  00000000  0000021c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000820  00000000  00000000  00000260  2**0
+  5 .debug_info   0000082b  00000000  00000000  00000274  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000705  00000000  00000000  00000a80  2**0
+  6 .debug_abbrev 000006f2  00000000  00000000  00000a9f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000391  00000000  00000000  00001185  2**0
+  7 .debug_line   000003af  00000000  00000000  00001191  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000000a4  00000000  00000000  00001518  2**2
+  8 .debug_frame  000000a4  00000000  00000000  00001540  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000003ba  00000000  00000000  000015bc  2**0
+  9 .debug_str    000003ba  00000000  00000000  000015e4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000001c2  00000000  00000000  00001976  2**0
+ 10 .debug_loc    000001c2  00000000  00000000  0000199e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000068  00000000  00000000  00001b38  2**0
+ 11 .debug_ranges 00000068  00000000  00000000  00001b60  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -42,7 +42,7 @@ Disassembly of section .text:
   20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
   24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
   28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
-  2c:	0c 94 93 00 	jmp	0x126	; 0x126 <__vector_11>
+  2c:	0c 94 9e 00 	jmp	0x13c	; 0x13c <__vector_11>
   30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
   34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
   38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
@@ -61,7 +61,7 @@ Disassembly of section .text:
   5c:	de bf       	out	0x3e, r29	; 62
   5e:	cd bf       	out	0x3d, r28	; 61
   60:	0e 94 36 00 	call	0x6c	; 0x6c <main>
-  64:	0c 94 a1 00 	jmp	0x142	; 0x142 <_exit>
+  64:	0c 94 ac 00 	jmp	0x158	; 0x158 <_exit>
 
 00000068 <__bad_interrupt>:
   68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -79,185 +79,216 @@ int main(void)
   72:	00 d0       	rcall	.+0      	; 0x74 <main+0x8>
   74:	cd b7       	in	r28, 0x3d	; 61
   76:	de b7       	in	r29, 0x3e	; 62
-    DDRD = 0b00000010;
-  78:	82 e0       	ldi	r24, 0x02	; 2
+    DDRD = 0b00000001;
+  78:	81 e0       	ldi	r24, 0x01	; 1
   7a:	81 bb       	out	0x11, r24	; 17
 	DDRA = 0xF0;
   7c:	80 ef       	ldi	r24, 0xF0	; 240
   7e:	8a bb       	out	0x1a, r24	; 26
-	PORTD = 0x0F;
-  80:	8f e0       	ldi	r24, 0x0F	; 15
-  82:	82 bb       	out	0x12, r24	; 18
-			usart_sendstring(s);	
-		}
-		else if((PINA & 0x02)==0x02) //S1 gedrückt
-		{
-			_delay_ms(500);		//Tastenentprellung 0.5s
-			char s[] = "bkw";
-  84:	0f 2e       	mov	r0, r31
-  86:	f2 e6       	ldi	r31, 0x62	; 98
-  88:	af 2e       	mov	r10, r31
-  8a:	fb e6       	ldi	r31, 0x6B	; 107
-  8c:	bf 2e       	mov	r11, r31
-  8e:	f0 2d       	mov	r31, r0
-  90:	0f 2e       	mov	r0, r31
-  92:	f7 e7       	ldi	r31, 0x77	; 119
-  94:	cf 2e       	mov	r12, r31
-  96:	d1 2c       	mov	r13, r1
-  98:	f0 2d       	mov	r31, r0
-    while (1) 
-    {
-		if((PINA & 0x01)==0x01) //S0 gedrückt
-		{
-			_delay_ms(500);		//Tastenentprellung 0.5s
-			char s[] = "fwd";
-  9a:	0f 2e       	mov	r0, r31
-  9c:	f6 e6       	ldi	r31, 0x66	; 102
-  9e:	ef 2e       	mov	r14, r31
-  a0:	f7 e7       	ldi	r31, 0x77	; 119
-  a2:	ff 2e       	mov	r15, r31
-  a4:	f0 2d       	mov	r31, r0
-  a6:	04 e6       	ldi	r16, 0x64	; 100
-  a8:	10 e0       	ldi	r17, 0x00	; 0
-	DDRA = 0xF0;
-	PORTD = 0x0F;
+	PORTA = 0x0F;
+  80:	9f e0       	ldi	r25, 0x0F	; 15
+  82:	9b bb       	out	0x1b, r25	; 27
+	DDRC = 0xFF;
+  84:	9f ef       	ldi	r25, 0xFF	; 255
+  86:	94 bb       	out	0x14, r25	; 20
+	PORTC = 0xF0;
+  88:	85 bb       	out	0x15, r24	; 21
+	
+	usart_init();
+  8a:	0e 94 85 00 	call	0x10a	; 0x10a <usart_init>
 	
     while (1) 
     {
-		if((PINA & 0x01)==0x01) //S0 gedrückt
-  aa:	c8 9b       	sbis	0x19, 0	; 25
-  ac:	12 c0       	rjmp	.+36     	; 0xd2 <main+0x66>
+		if((~PINA & 0x01)==0x01) //S0 gedrückt
+		{
+			PORTC=0xFF;
+  8e:	dd 24       	eor	r13, r13
+  90:	da 94       	dec	r13
+			_delay_ms(500);		//Tastenentprellung 0.5s
+			char s[] = "fwd";
+  92:	0f 2e       	mov	r0, r31
+  94:	f6 e6       	ldi	r31, 0x66	; 102
+  96:	ef 2e       	mov	r14, r31
+  98:	f7 e7       	ldi	r31, 0x77	; 119
+  9a:	ff 2e       	mov	r15, r31
+  9c:	f0 2d       	mov	r31, r0
+  9e:	04 e6       	ldi	r16, 0x64	; 100
+  a0:	10 e0       	ldi	r17, 0x00	; 0
+		}
+		if((~PINA & 0x02)==0x02) //S1 gedrückt
+		{
+			PORTC=0x00;
+			_delay_ms(500);		//Tastenentprellung 0.5s
+			char s[] = "bkw";
+  a2:	0f 2e       	mov	r0, r31
+  a4:	f2 e6       	ldi	r31, 0x62	; 98
+  a6:	8f 2e       	mov	r8, r31
+  a8:	fb e6       	ldi	r31, 0x6B	; 107
+  aa:	9f 2e       	mov	r9, r31
+  ac:	f0 2d       	mov	r31, r0
+  ae:	0f 2e       	mov	r0, r31
+  b0:	f7 e7       	ldi	r31, 0x77	; 119
+  b2:	af 2e       	mov	r10, r31
+  b4:	b1 2c       	mov	r11, r1
+  b6:	f0 2d       	mov	r31, r0
+	
+	usart_init();
+	
+    while (1) 
+    {
+		if((~PINA & 0x01)==0x01) //S0 gedrückt
+  b8:	c8 99       	sbic	0x19, 0	; 25
+  ba:	12 c0       	rjmp	.+36     	; 0xe0 <main+0x74>
+		{
+			PORTC=0xFF;
+  bc:	d5 ba       	out	0x15, r13	; 21
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-  ae:	2f e7       	ldi	r18, 0x7F	; 127
-  b0:	8f e4       	ldi	r24, 0x4F	; 79
-  b2:	92 e1       	ldi	r25, 0x12	; 18
-  b4:	21 50       	subi	r18, 0x01	; 1
-  b6:	80 40       	sbci	r24, 0x00	; 0
-  b8:	90 40       	sbci	r25, 0x00	; 0
-  ba:	e1 f7       	brne	.-8      	; 0xb4 <main+0x48>
-  bc:	00 c0       	rjmp	.+0      	; 0xbe <main+0x52>
-  be:	00 00       	nop
-		{
+  be:	2f e7       	ldi	r18, 0x7F	; 127
+  c0:	8f e4       	ldi	r24, 0x4F	; 79
+  c2:	92 e1       	ldi	r25, 0x12	; 18
+  c4:	21 50       	subi	r18, 0x01	; 1
+  c6:	80 40       	sbci	r24, 0x00	; 0
+  c8:	90 40       	sbci	r25, 0x00	; 0
+  ca:	e1 f7       	brne	.-8      	; 0xc4 <main+0x58>
+  cc:	00 c0       	rjmp	.+0      	; 0xce <main+0x62>
+  ce:	00 00       	nop
 			_delay_ms(500);		//Tastenentprellung 0.5s
 			char s[] = "fwd";
-  c0:	fa 82       	std	Y+2, r15	; 0x02
-  c2:	e9 82       	std	Y+1, r14	; 0x01
-  c4:	1c 83       	std	Y+4, r17	; 0x04
-  c6:	0b 83       	std	Y+3, r16	; 0x03
+  d0:	fa 82       	std	Y+2, r15	; 0x02
+  d2:	e9 82       	std	Y+1, r14	; 0x01
+  d4:	1c 83       	std	Y+4, r17	; 0x04
+  d6:	0b 83       	std	Y+3, r16	; 0x03
 			usart_sendstring(s);	
-  c8:	ce 01       	movw	r24, r28
-  ca:	01 96       	adiw	r24, 0x01	; 1
-  cc:	0e 94 81 00 	call	0x102	; 0x102 <usart_sendstring>
-  d0:	ec cf       	rjmp	.-40     	; 0xaa <main+0x3e>
+  d8:	ce 01       	movw	r24, r28
+  da:	01 96       	adiw	r24, 0x01	; 1
+  dc:	0e 94 8f 00 	call	0x11e	; 0x11e <usart_sendstring>
 		}
-		else if((PINA & 0x02)==0x02) //S1 gedrückt
-  d2:	c9 9b       	sbis	0x19, 1	; 25
-  d4:	ea cf       	rjmp	.-44     	; 0xaa <main+0x3e>
-  d6:	2f e7       	ldi	r18, 0x7F	; 127
-  d8:	8f e4       	ldi	r24, 0x4F	; 79
-  da:	92 e1       	ldi	r25, 0x12	; 18
-  dc:	21 50       	subi	r18, 0x01	; 1
-  de:	80 40       	sbci	r24, 0x00	; 0
-  e0:	90 40       	sbci	r25, 0x00	; 0
-  e2:	e1 f7       	brne	.-8      	; 0xdc <main+0x70>
-  e4:	00 c0       	rjmp	.+0      	; 0xe6 <main+0x7a>
-  e6:	00 00       	nop
+		if((~PINA & 0x02)==0x02) //S1 gedrückt
+  e0:	c9 99       	sbic	0x19, 1	; 25
+  e2:	ea cf       	rjmp	.-44     	; 0xb8 <main+0x4c>
 		{
+			PORTC=0x00;
+  e4:	15 ba       	out	0x15, r1	; 21
+  e6:	2f e7       	ldi	r18, 0x7F	; 127
+  e8:	8f e4       	ldi	r24, 0x4F	; 79
+  ea:	92 e1       	ldi	r25, 0x12	; 18
+  ec:	21 50       	subi	r18, 0x01	; 1
+  ee:	80 40       	sbci	r24, 0x00	; 0
+  f0:	90 40       	sbci	r25, 0x00	; 0
+  f2:	e1 f7       	brne	.-8      	; 0xec <main+0x80>
+  f4:	00 c0       	rjmp	.+0      	; 0xf6 <main+0x8a>
+  f6:	00 00       	nop
 			_delay_ms(500);		//Tastenentprellung 0.5s
 			char s[] = "bkw";
-  e8:	ba 82       	std	Y+2, r11	; 0x02
-  ea:	a9 82       	std	Y+1, r10	; 0x01
-  ec:	dc 82       	std	Y+4, r13	; 0x04
-  ee:	cb 82       	std	Y+3, r12	; 0x03
+  f8:	9a 82       	std	Y+2, r9	; 0x02
+  fa:	89 82       	std	Y+1, r8	; 0x01
+  fc:	bc 82       	std	Y+4, r11	; 0x04
+  fe:	ab 82       	std	Y+3, r10	; 0x03
 			usart_sendstring(s);
-  f0:	ce 01       	movw	r24, r28
-  f2:	01 96       	adiw	r24, 0x01	; 1
-  f4:	0e 94 81 00 	call	0x102	; 0x102 <usart_sendstring>
-  f8:	d8 cf       	rjmp	.-80     	; 0xaa <main+0x3e>
+ 100:	ce 01       	movw	r24, r28
+ 102:	01 96       	adiw	r24, 0x01	; 1
+ 104:	0e 94 8f 00 	call	0x11e	; 0x11e <usart_sendstring>
+ 108:	d7 cf       	rjmp	.-82     	; 0xb8 <main+0x4c>
 
-000000fa <usart_putchar>:
+0000010a <usart_init>:
+//=========================================
+void usart_init() 
+{
+	// Baudrate einstellen
+	int baudrate = (unsigned long) (12000000/9600)/16-1;	//baudrate hier ist 9600
+	UBRRH = (baudrate>>8);						//URSEL=0					
+ 10a:	10 bc       	out	0x20, r1	; 32
+	UBRRL = baudrate;
+ 10c:	8d e4       	ldi	r24, 0x4D	; 77
+ 10e:	89 b9       	out	0x09, r24	; 9
+	
+	//UART-RAhmen konfigurieren
+	//UCSRA=(1<<RXC) | (1<<TXC);	
+	UCSRB= (1<<TXEN) | (1<<TXCIE) | (1<<RXCIE) | (1<<RXEN);						//enable Receiver/Transmitter, RX Complete Interrupt Enable, 
+ 110:	88 ed       	ldi	r24, 0xD8	; 216
+ 112:	8a b9       	out	0x0a, r24	; 10
+ 114:	08 95       	ret
+
+00000116 <usart_putchar>:
 //=========================================
 //USART Senderoutine
 //=========================================
 void usart_putchar(unsigned char data)	
 {
 	while (!( UCSRA & (1<<UDRE)) );	// warten bis Sendepuffer leer ist ("polling")
-  fa:	5d 9b       	sbis	0x0b, 5	; 11
-  fc:	fe cf       	rjmp	.-4      	; 0xfa <usart_putchar>
+ 116:	5d 9b       	sbis	0x0b, 5	; 11
+ 118:	fe cf       	rjmp	.-4      	; 0x116 <usart_putchar>
 	UDR = data;						// neue Daten senden
-  fe:	8c b9       	out	0x0c, r24	; 12
- 100:	08 95       	ret
+ 11a:	8c b9       	out	0x0c, r24	; 12
+ 11c:	08 95       	ret
 
-00000102 <usart_sendstring>:
+0000011e <usart_sendstring>:
 }
 
 void usart_sendstring(char *s)
 {
- 102:	cf 93       	push	r28
- 104:	df 93       	push	r29
- 106:	ec 01       	movw	r28, r24
+ 11e:	cf 93       	push	r28
+ 120:	df 93       	push	r29
+ 122:	ec 01       	movw	r28, r24
 	int i = 0;
 	while(s[i]!=0)			//wenn array fertig ist, dann wert ist Null
- 108:	88 81       	ld	r24, Y
- 10a:	88 23       	and	r24, r24
- 10c:	49 f0       	breq	.+18     	; 0x120 <usart_sendstring+0x1e>
- 10e:	21 96       	adiw	r28, 0x01	; 1
+ 124:	88 81       	ld	r24, Y
+ 126:	88 23       	and	r24, r24
+ 128:	31 f0       	breq	.+12     	; 0x136 <usart_sendstring+0x18>
+ 12a:	21 96       	adiw	r28, 0x01	; 1
 	{
 		usart_putchar(s[i]);
- 110:	0e 94 7d 00 	call	0xfa	; 0xfa <usart_putchar>
-		usart_putchar('\r');
- 114:	8d e0       	ldi	r24, 0x0D	; 13
- 116:	0e 94 7d 00 	call	0xfa	; 0xfa <usart_putchar>
+ 12c:	0e 94 8b 00 	call	0x116	; 0x116 <usart_putchar>
 }
 
 void usart_sendstring(char *s)
 {
 	int i = 0;
 	while(s[i]!=0)			//wenn array fertig ist, dann wert ist Null
- 11a:	89 91       	ld	r24, Y+
- 11c:	81 11       	cpse	r24, r1
- 11e:	f8 cf       	rjmp	.-16     	; 0x110 <usart_sendstring+0xe>
+ 130:	89 91       	ld	r24, Y+
+ 132:	81 11       	cpse	r24, r1
+ 134:	fb cf       	rjmp	.-10     	; 0x12c <usart_sendstring+0xe>
 		usart_putchar(s[i]);
-		usart_putchar('\r');
+		//usart_putchar('\r');
 
 		i++;
 	}
 }
- 120:	df 91       	pop	r29
- 122:	cf 91       	pop	r28
- 124:	08 95       	ret
+ 136:	df 91       	pop	r29
+ 138:	cf 91       	pop	r28
+ 13a:	08 95       	ret
 
-00000126 <__vector_11>:
+0000013c <__vector_11>:
 
 //=========================================
 //USART Empfangs-ISR
 //=========================================
 ISR(USART_RXC_vect)
 {
- 126:	1f 92       	push	r1
- 128:	0f 92       	push	r0
- 12a:	0f b6       	in	r0, 0x3f	; 63
- 12c:	0f 92       	push	r0
- 12e:	11 24       	eor	r1, r1
- 130:	8f 93       	push	r24
+ 13c:	1f 92       	push	r1
+ 13e:	0f 92       	push	r0
+ 140:	0f b6       	in	r0, 0x3f	; 63
+ 142:	0f 92       	push	r0
+ 144:	11 24       	eor	r1, r1
+ 146:	8f 93       	push	r24
 	PORTC=UDR;
- 132:	8c b1       	in	r24, 0x0c	; 12
- 134:	85 bb       	out	0x15, r24	; 21
+ 148:	8c b1       	in	r24, 0x0c	; 12
+ 14a:	85 bb       	out	0x15, r24	; 21
 }
- 136:	8f 91       	pop	r24
- 138:	0f 90       	pop	r0
- 13a:	0f be       	out	0x3f, r0	; 63
- 13c:	0f 90       	pop	r0
- 13e:	1f 90       	pop	r1
- 140:	18 95       	reti
+ 14c:	8f 91       	pop	r24
+ 14e:	0f 90       	pop	r0
+ 150:	0f be       	out	0x3f, r0	; 63
+ 152:	0f 90       	pop	r0
+ 154:	1f 90       	pop	r1
+ 156:	18 95       	reti
 
-00000142 <_exit>:
- 142:	f8 94       	cli
+00000158 <_exit>:
+ 158:	f8 94       	cli
 
-00000144 <__stop_program>:
- 144:	ff cf       	rjmp	.-2      	; 0x144 <__stop_program>
+0000015a <__stop_program>:
+ 15a:	ff cf       	rjmp	.-2      	; 0x15a <__stop_program>

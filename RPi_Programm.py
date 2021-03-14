@@ -1,12 +1,12 @@
 from tkinter import *    # for GUI
-#import serial    # für UART
+import serial    # für UART
 from time import sleep # for delay
 import os, sys   # für Verzeichnisse auslesen
 #from PIL import *
 from threading import Thread
 
 
-#Liste
+#Listes
 images = []
 imagenumber = 0
 
@@ -44,13 +44,16 @@ def list_folder():
         print(file)
         images.append(file)
 
+
+
 #Uart Routine
 def uart(main_window):
-	print("Hello")
-	print("World")
-	while True:
+    print("Hello")
+    print("World")
+    while True:
         print("Hello")
         xneu = ser.readline()
+        print(xneu)
 	    # der Empfangene Befehl (ein Bild weiter oder zurück) steht jetzt in xneu
         if(xneu == 'fwd'):	#Hier kommt quasi der selbe Befehlsblock wie wenn man im GUI auf den forward Button drücken würde
             main_window.after(0, callbackfwd)
@@ -67,14 +70,14 @@ def uart(main_window):
             #img = PhotoImage(file = picture)
             #Label(pictureFrame, image=img).grid(row=0, column=0, padx=10, pady=3)
         print("World")
-		#main_window.after(0, callbackfwd)
-		#sleep(1)
+        #main_window.after(0, callbackfwd)
+        #sleep(1)
 
 list_folder()
 print(images)
 
 #GUI
-MainWindow = Tk() # Fenster erstellen
+MainWindow = Tk() #Fenster erstellen
 MainWindow.title("Image-Viewer") # Fenster Titel
 MainWindow.config(background = '#FFFFFF') # Hintergrundfarbe des Fensters (weiß)
 #MainWindow.geometry('1920x1080') # Größe des Fensters
