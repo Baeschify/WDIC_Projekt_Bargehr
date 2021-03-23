@@ -45,36 +45,22 @@ def list_folder():
         images.append(file)
 
 
-
 #Uart Routine
 def uart(main_window):
-    print("Hello")
-    print("World")
+    print("UART Thread gestartet!")
     while True:
-        print("Hello")
-        xneu = ser.readline()
-        print(xneu)
+        data = ser.readline()
+        print(data)
 	    # der Empfangene Befehl (ein Bild weiter oder zurück) steht jetzt in xneu
-        if(xneu == 'fwd'):	#Hier kommt quasi der selbe Befehlsblock wie wenn man im GUI auf den forward Button drücken würde
+        if data == b'fwd':
             main_window.after(0, callbackfwd)
-            #imagenumber=imagenumber + 1 
-            #picture = 'images_png/' + images[imagenumber]
-            #print(picture)
-            #img = PhotoImage(file = picture)
-            #Label(pictureFrame, image=img).grid(row=0, column=0, padx=10, pady=3)
-        elif(xneu == 'bkw'):
-            main_window.agter(0, callbackbkw)
-            #imagenumber=imagenumber - 1 
-            #picture = 'images_png/' + images[imagenumber]
-            #print(picture)
-            #img = PhotoImage(file = picture)
-            #Label(pictureFrame, image=img).grid(row=0, column=0, padx=10, pady=3)
-        print("World")
-        #main_window.after(0, callbackfwd)
-        #sleep(1)
+        elif data == b'bkw':
+            main_window.after(0, callbackbkw)
+
 
 list_folder()
 print(images)
+
 
 #GUI
 MainWindow = Tk() #Fenster erstellen
@@ -101,13 +87,6 @@ buttonfwd.grid(row=0, column=2, padx=0, pady=0)
 buttonbkw = Button(buttonFrame, bg='#0000FF', text='Eins Zurück', command=callbackbkw, width=50)
 buttonbkw.grid(row=0, column=0, padx=0, pady=0)
 
-#MainWindow.mainloop()
-#Statt dem mainloop()-Befehl muss wahlweise eine andere Lösung gefunden werden!
-#Das Problem ist, dass ich wegen der GUI-Schleife nicht nebenbei in einer anderen Schleife die UART Schnittstelle abfragen kann.
-#Eine Lösung im Internet ist in einer While-Schleife, wo sich ja auch die UART-Empfangsroutine befinden wird,
-#'tk.update_idletasks()' und 'tk.update()' zu verwende, wobei dies nicht ganz funktioniert.
-
-
 
 #Serielle Schnittstelle initialisieren:
 ser = serial.Serial(
@@ -115,26 +94,12 @@ ser = serial.Serial(
         baudrate = 9600,
         parity=serial.PARITY_NONE,
         stopbits=serial.STOPBITS_ONE,
-        bytesize=serial.EIGHTBITS
-        #timeout=1				#weiß leider nicht ganz was timeout genau macht
+        bytesize=serial.EIGHTBITS,
+        timeout=1				#weiß leider nicht ganz was timeout genau macht
 )
-# Davor muss noch in den Einstellungen des RPi's die serielle Schnittstelle aktiviert werden:
-# https://www.electronicwings.com/raspberry-pi/raspberry-pi-uart-communication-using-python-and-c
-# in diesem Tutorial ist alles beschrieben.
 
 
 thread = Thread(target=uart, args=(MainWindow,), daemon=True)
 thread.start()
 
 MainWindow.mainloop()
-
-
-
-#Tkinter kann leider keine jpg Bilder anzeigen, sondern nur png und andere, was derzeit noch zu Problemen mit dem Anzeigen der
-#Bilder mit sich bringt
-
-
-#In der Konsole zuvor eingeben, damit Programmtechnische Funktionen installiert werden
-#'sudo apt-get install python python-tk idle python-pmw python-pil --yes'
-#'sudo apt-get install minicom python-serial'
-#'sudo apt-get install xrdp
