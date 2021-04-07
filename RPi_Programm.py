@@ -64,7 +64,7 @@ print(images)
 
 #GUI
 MainWindow = Tk() #Fenster erstellen
-MainWindow.title("Image-Viewer") # Fenster Titel
+MainWindow.title("Digitaler Bilderrahmen") # Fenster Titel
 MainWindow.config(background = '#FFFFFF') # Hintergrundfarbe des Fensters (weiß)
 #MainWindow.geometry('1920x1080') # Größe des Fensters
 
