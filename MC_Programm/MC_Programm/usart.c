@@ -21,7 +21,7 @@ void usart_init()
 	
 	//UART-RAhmen konfigurieren
 	//UCSRA=(1<<RXC) | (1<<TXC);	
-	UCSRB= (1<<TXEN) | (1<<TXCIE) | (1<<RXCIE) | (1<<RXEN);						//enable Receiver/Transmitter, RX Complete Interrupt Enable, 
+	UCSRB= (1<<TXEN) | (1<<TXCIE) | (1<<RXCIE) | (1<<RXEN);	//enable Receiver/Transmitter, RX Complete Interrupt Enable, 
 	//UCSRC= 						//asynchroner Mode, Datenformat 8N1, URSEL=1
 	
 }
