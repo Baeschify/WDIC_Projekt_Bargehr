@@ -30,10 +30,3 @@ In der Konsole muss man ein paar Befehle zuvor eingeben, damit Programmtechnisch
 'sudo apt-get install python python-tk idle python-pmw python-pil --yes'        # Tkinter/GUI
 'sudo apt-get install minicom python-serial'                                    # UART
 'sudo apt-get install xrdp                                                      # RemoteDesktop
-
-
-
-Todo's:
-    - Andere/Mehr Bilder einfügen
-    - Verzeichniswechsel versuchen 
-    - evtl Button um Verzeichnis zu aktualisieren. Bsp: Bilder auf USB geändert, also muss aktualisiert werden, um die neuen Bilder zu sehen)
